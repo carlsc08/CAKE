@@ -75,3 +75,100 @@ function main(selection){
         
     }
 }
+
+function textNodesUnder(el) {
+    var n, a = [], walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+    while (n = walk.nextNode()) a.push(n);
+    return a;
+}
+
+function createPopUp(content) {
+    const popUp = document.createElement('div');
+    popUp.className = 'popup';
+    popUp.textContent = content;
+    return popUp;
+}
+
+function closePopUp(element) {
+    const popUp = element.querySelector('.popup');
+    if (popUp) {
+        popUp.style.display = 'none';
+        popUp.remove();
+    }
+}
+
+function highlightWords() {
+    let extensionActive = false; // Track the extension's activation state
+
+    alert('hello!');
+    const wordList = ['Plato', 'platonism', 'apple'];
+    const wordPattern = new RegExp(`\\b(${wordList.join('|')})\\b`, 'gi');
+    const elements = document.querySelectorAll('*');
+    const style = document.createElement('style');
+    style.textContent = `
+        .highlighted {
+            background-color: #D1EDF2;
+            border: none;
+            border-radius: 2px;
+            margin: 0;
+            font-size: inherit;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        .popup {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            font-family: Arial, sans-serif;
+        }
+    `;
+
+    document.head.appendChild(style);
+
+    elements.forEach(element => {
+        var textNodes = textNodesUnder(element);
+        textNodes.forEach(node => {
+            const textContent = node.textContent;
+            const newTextContent = textContent.replace(wordPattern, match => {
+                console.log(`Highlighted word: ${match}`);
+                return `<button class="highlighted">${match}</button>`;
+            });
+
+            if (textContent !== newTextContent) {
+                const newElement = document.createElement('span');
+                newElement.innerHTML = newTextContent;
+                node.parentNode.replaceChild(newElement, node);
+            }
+        });
+    });
+
+    // Add click event to highlighted buttons
+    const highlightedButtons = document.querySelectorAll('.highlighted');
+    highlightedButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (extensionActive) {
+                closePopUp(button);
+            } else {
+                const popUp = createPopUp('Greetings, fellow human being!');
+                button.appendChild(popUp);
+                popUp.style.display = 'block';
+            }
+        });
+    });
+
+    // Add activation button event
+    const activationButton = document.querySelector('#extension-activation-button');
+    if (activationButton) {
+        activationButton.addEventListener('click', () => {
+            extensionActive = !extensionActive; // Toggle activation state
+            if (!extensionActive) {
+                // Close all popups and return the webpage to normal
+                const popUps = document.querySelectorAll('.popup');
+                popUps.forEach(popUp => popUp.remove());
+            }
+        });
+    }
+}
+
+highlightWords();
