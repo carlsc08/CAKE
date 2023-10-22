@@ -3,10 +3,18 @@
   "name": "Hello Extensions",
   "description": "Base Level Extension",
   "version": "1.0",
-  "permissions": ["activeTab"],
+  "permissions": ["activeTab", "scripting"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["script.js"]
+    }
+  ],
   "action": {
     "default_title": "Title",
-    "default_icon": "images/hello_icon.png",
-    "default_popup": "hello.html"
+    "default_icon": "images/hello_icon.png"
   }
 }
