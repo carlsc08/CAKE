@@ -23,6 +23,7 @@ function main(selection){
         displayKeywords(map);
 
         //open popup
+        createFloatingDiv();
         window.open({
             type: 'popup',
             url: 'hello.html',
@@ -49,4 +50,20 @@ function displayKeywords(map){
     for (let [key, value] in map){
         //document.write("<p></p>");
     }
+}
+
+function createFloatingDiv() {
+    const floatingDiv = document.createElement('div');
+    floatingDiv.style.position = 'absolute';
+    floatingDiv.style.top = '50px';
+    floatingDiv.style.left = '50px';
+    floatingDiv.style.width = '200px';
+    floatingDiv.style.height = '200px';
+    floatingDiv.style.backgroundColor = 'white';
+    floatingDiv.style.border = '1px solid black';
+    document.body.appendChild(floatingDiv);
+  
+    setTimeout(() => {
+      floatingDiv.style.display = 'block';
+    }, 5000);
 }
