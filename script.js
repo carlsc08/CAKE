@@ -14,18 +14,8 @@ function createFloatingDiv() {
     setTimeout(() => {
       floatingDiv.style.display = 'block';
     }, 5000);
-  }
-  
-  chrome.browserAction.onClicked.addListener(createFloatingDiv);
-
-  function showPopup() {
-    const popup = document.createElement('div');
-    popup.textContent = 'This is a popup!';
-    document.body.appendChild(popup);
-  }
-  
-  setTimeout(showPopup, 5000);
-  
+}
+   
 function stringToHashMap(str) {
     let stringsMap = new Map();
     let lines = str.split(/\r?\n/);
@@ -35,4 +25,27 @@ function stringToHashMap(str) {
         stringsMap.set(substrings[i], substrings[i+1]);
     }
     console.log(stringsMap)
+}
+
+getCurSelection();
+
+function getCurSelection(){
+    var text = "";
+    if (window.getSelection()) {
+        text = window.getSelection().toString();
+    } else {
+        text = "im sad. i couldnt find a selection! please make one!";
+    }
+    main(text);
+}
+
+/**
+ * @param {selection} holds what user had highlighted when they clicked on the extension
+ */
+function main(selection){
+    if (selection){
+        alert(selection);
+    } else {
+        alert("i am sad! i found no selection :(");
+    }
 }
