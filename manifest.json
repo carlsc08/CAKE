@@ -1,11 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "Hello Extensions",
+  "name": "Babble Bangers",
   "description": "Base Level Extension",
   "version": "1.0",
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "sidePanel"],
   "background": {
     "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
   },
   "content_scripts": [
     {
