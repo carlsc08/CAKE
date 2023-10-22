@@ -6,7 +6,6 @@
   "permissions": ["activeTab"],
   "action": {
     "default_title": "Title",
-    "default_icon": "images/hello_icon.png",
-    "default_popup": "hello.html"
+    "default_icon": "images/hello_icon.png"
   }
 }
